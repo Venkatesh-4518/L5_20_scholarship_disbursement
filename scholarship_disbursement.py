@@ -41,10 +41,7 @@ def disburse(award_id):
 
 def archive():
     """Archive scholarship awards."""
-    try:
-        os.system("echo archiving awards")
-    except Exception:
-        pass
+    print("archiving awards")
 
 
 
