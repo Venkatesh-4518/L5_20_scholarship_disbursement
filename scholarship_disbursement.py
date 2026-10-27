@@ -4,7 +4,14 @@ import sqlite3
 
 
 conn = sqlite3.connect(":memory:")
-conn.execute("CREATE TABLE awards (id INTEGER PRIMARY KEY, student TEXT, scheme TEXT, amount INTEGER, disbursed INTEGER)")
+conn.execute(
+    "CREATE TABLE awards ("
+    "id INTEGER PRIMARY KEY, "
+    "student TEXT, "
+    "scheme TEXT, "
+    "amount INTEGER, "
+    "disbursed INTEGER)"
+)
 DISBURSED_TOTAL = 0
 
 
@@ -15,12 +22,10 @@ def grant(student, scheme, amount, audit=None):
     conn.execute(
         "INSERT INTO awards (student, scheme, amount, disbursed) "
         "VALUES (?, ?, ?, 0)",
-        (student, scheme, amount, 0),
+        (student, scheme, amount),
     )
     audit.append(student)
     return audit
-
-
 
 
 def disburse(award_id):
@@ -37,13 +42,9 @@ def disburse(award_id):
         return row[0]
 
 
-
-
 def archive():
     """Archive scholarship awards."""
     print("archiving awards")
-
-
 
 
 def by_scheme_count(scheme):
@@ -51,10 +52,9 @@ def by_scheme_count(scheme):
     if scheme is None:
         return 0
     return conn.execute(
-        "SELECT COUNT(*) FROM awards WHERE scheme = ?", (scheme,)
+        "SELECT COUNT(*) FROM awards WHERE scheme = ?",
+        (scheme,),
     ).fetchone()[0]
-
-
 
 
 def main():
